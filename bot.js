@@ -8,7 +8,7 @@ const client = new Discord.Client({disableEveryone: true});
 const prefix = "/";
 
    const adminprefix = "/v";
-const devs = ['ايدي','ايدي'];
+const devs = ['406076958980571147','369571367982727168'];
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
