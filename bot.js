@@ -672,7 +672,7 @@ client.on('message', message => {
 antibots[message.guild.id] = {
 onoff: 'On',
 }
-message.channel.send(`**âœ… The AntiBots Is __ً‌گژً‌گچ__ !**`)
+message.channel.send(`The AntiBots has been activing  !**`)
           fs.writeFile("./antibots.json", JSON.stringify(antibots), (err) => {
             if (err) console.error(err)
             .catch(err => {
@@ -692,7 +692,7 @@ client.on('message', message => {
 antibots[message.guild.id] = {
 onoff: 'Off',
 }
-message.channel.send(`**â›” The AntiBots Is __ً‌گژً‌گ…ً‌گ…__ !**`)
+message.channel.send(` **The AntiBots has been shuting down !**`)
           fs.writeFile("./antibots.json", JSON.stringify(antibots), (err) => {
             if (err) console.error(err)
             .catch(err => {
