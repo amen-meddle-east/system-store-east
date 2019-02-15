@@ -4,8 +4,6 @@ const Util = require('discord.js');
 
 const getYoutubeID = require('get-youtube-id');
 
-const Canvas = require("canvas");
-
 const convert = require("hh-mm-ss");
 
 const dateFormat = require('dateformat');
@@ -112,29 +110,7 @@ client.on('message', function(msg) {
   });//////////////////Mal Team  By:Mal Mahmoud-QuaStylr
 
 
-  client.on('message', message =>{
-    let args = message.content.split(' ');
-    let prefix = '/'; 
-    
-    if(args[0] === `${prefix}avatar`){
-        let mentions = message.mentions.members.first()
-        if(!mentions) {
-          let sicon = message.author.avatarURL
-          let embed = new Discord.RichEmbed()
-          .setImage(message.author.avatarURL)
-          .setColor("#f7abab") 
-          .setDescription(`**${message.author.username}#${message.author.discriminator}**'s avatar :`);
-          message.channel.send({embed})
-        } else {
-          let sicon = mentions.user.avatarURL
-          let embed = new Discord.RichEmbed()
-          .setColor("#f7abab")
-          .setDescription(`**${mentions.user.username}#${mentions.user.discriminator}**'s avatar :`)
-          .setImage(sicon)
-          message.channel.send({embed})
-        }
-    };
-});//////////////////Mal Team  By:Mal Mahmoud-QuaStylr
+
 
 
 client.on("message", msg => {
