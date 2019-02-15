@@ -4,7 +4,6 @@ const Util = require('discord.js');
 
 const getYoutubeID = require('get-youtube-id');
 
-const convert = require("hh-mm-ss");
 
 const dateFormat = require('dateformat');
 
