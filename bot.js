@@ -25,7 +25,7 @@ const moment = require('moment');
 
 const client = new Discord.Client({disableEveryone: true});
 
-const prefix = "$";
+const prefix = "/";
 
 
 //////////////////Mal Team  By:Mal Mahmoud-QuaStylr
@@ -143,64 +143,84 @@ client.on('message', message => {
 
 
 
-client.on('message', async message =>{
-    if (message.author.boss) return;
-      var prefix = "/";
-  
-  if (!message.content.startsWith(prefix)) return;
-      let command = message.content.split(" ")[0];
-       command = command.slice(prefix.length);
-      let args = message.content.split(" ").slice(1);
-      if (command == "mute") {
-          if (!message.channel.guild) return;
-          if(!message.guild.member(message.author).hasPermission("MANAGE_MESSAGES")) return message.reply("انت لا تملك صلاحيات !! ").then(msg => msg.delete(5000));
-          if(!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return message.reply("البوت لايملك صلاحيات ").then(msg => msg.delete(5000));;
-          let user = message.mentions.users.first();
-          let muteRole = message.guild.roles.find("name", "Muted");
-          if (!muteRole) return message.reply("** لا يوجد رتبة الميوت 'Muted' **").then(msg => {msg.delete(5000)});
-          if (message.mentions.users.size < 1) return message.reply('** يجب عليك المنشن اولاً **').then(msg => {msg.delete(5000)});
-          let reason = message.content.split(" ").slice(2).join(" ");
-          message.guild.member(user).addRole(muteRole);
-          const muteembed = new Discord.RichEmbed()
-          .setColor("RANDOM")
-          .setAuthor(`Muted!`, user.displayAvatarURL)
-          .setThumbnail(user.displayAvatarURL)
-          .addField("**:busts_in_silhouette:  المستخدم**",  '**[ ' + `${user.tag}` + ' ]**',true)
-          .addField("**:hammer:  تم بواسطة **", '**[ ' + `${message.author.tag}` + ' ]**',true)
-          .addField("**:book:  السبب**", '**[ ' + `${reason}` + ' ]**',true)
-          .addField("User", user, true)
-          message.channel.send({embed : muteembed});
-          var muteembeddm = new Discord.RichEmbed()
-          .setAuthor(`Muted!`, user.displayAvatarURL)
-          .setDescription(`      
-  ${user} انت معاقب بميوت كتابي بسبب مخالفة القوانين
-  ${message.author.tag} تمت معاقبتك بواسطة
-  [ ${reason} ] : السبب
-  اذا كانت العقوبة عن طريق الخطأ تكلم مع المسؤلين
-  `)
-          .setFooter(`في سيرفر : ${message.guild.name}`)
-          .setColor("RANDOM")
-      user.send( muteembeddm);
-    }
-  if(command === `unmute`) {
-    if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.sendMessage("**ليس لديك صلاحية لفك عن الشخص ميوت**:x: ").then(m => m.delete(5000));
-  if(!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return message.reply("**ما عندي برمشن**").then(msg => msg.delete(6000))
-  
-    let toMute = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-    if(!toMute) return message.channel.sendMessage("**عليك المنشن أولاّ**:x: ");
-  
-    let role = message.guild.roles.find (r => r.name === "Muted");
-    
-    if(!role || !toMute.roles.has(role.id)) return message.channel.sendMessage("**لم يتم اعطاء هذه شخص ميوت من الأساس**:x:")
-  
-    await toMute.removeRole(role)
-    message.channel.sendMessage("**لقد تم فك الميوت عن شخص بنجاح**:white_check_mark:");
-  
-    return;
-  
-    }
-  
-  });//////////////////Mal Team  By:Mal Mahmoud-QuaStylr
+client.on('message', message => {
+    if (message.content.startsWith(prefix + "mute")) { // ميوت مع برمشن 
+     
+
+        if (!message.member.hasPermission('MUTE_MEMBERS')) {
+            message.channel.send(':lock: ``ليس لديك الصلاحيات الكافية لعمل ميوت ``');
+            return;
+        }
+
+        if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES')) {
+            return message.reply('``ليس لدي الصلاحيات الكافية ``')
+        }
+        const msmute = require('ms');
+        let reasonMute = message.content.split(' ').slice(3).join(' ');
+        let timeMute = message.content.split(' ')[2];
+        let guildMute = message.guild;
+        let adminRoleMute = guild.roles.find("name", "log");
+        let memberMute = message.guild.member;
+        let userMute = message.mentions.users.first();
+        let muteRoleMute = client.guilds.get(message.guild.id).roles.find('name', 'muted');
+   
+
+        if (!muteRoleMute) {
+            return message.reply('``انشأ رتبة ميوتيد "muted"``');
+        }
+
+        if (message.mentions.users.size < 1) {
+            return message.reply('``منشن شخص.``');
+        }
+        if (message.author.id === userMute.id) {
+            return message.reply('``لا يمكن استخدامه على نفسك``  :wink:');
+        }
+        if (!timeMute) {
+            return message.reply('``/mute [@mention] [1m] [reason]``ارسل مدة الميوت مثال');
+        }
+        if (!timeMute.match(/[1-60][s,m,h,d,w]/g)) {
+            return message.reply('``/mute [@mention] [1m] [reason]`` اكتب وقت صحيح مثال');
+        }
+        if (!reasonMute) {
+            return message.reply(' ``/mute [@mention] [15m] [reason]``*اعطيني سبب الميوت مثال');
+        }
+        if (reasonMute.time < 1) {
+            return message.reply('TIME?').then(message => message.delete(2000));
+        }
+        if (reasonMute.length < 1) {
+            return message.reply('``اعطيني سبب الميوت``');
+        }
+        message.guild.member(userMute).addRole(muteRoleMute)
+
+        setTimeout(() => {
+            message.guild.member(userMute).removeRole(muteRoleMute)
+        }, msmute(timeMute));
+        message.guild.channels.filter(textchannel => textchannel.type === 'text').forEach(cnl => {
+            cnl.overwritePermissions(muteRoleMute, {
+                SEND_MESSAGES: false
+            });
+        });
+
+        message.reply("تم اعطاء الشخص  ميوت.");
+
+       message.channel.send({embed: {
+            color: 16745560,
+            author: {
+              name: client.user.username,
+              icon_url: client.user.avatarURL
+            },
+            fields: [{
+                name: 'Mute',
+                value: `**Muted:**${userMute.username}#${userMute.discriminator}\n**Moderator:** ${message.author.username}\n**Duration:** ${msmute(msmute(timeMute), {long: true})}\n**Reason:** ${reasonMute}`
+              }
+            ],
+            timestamp: new Date(),
+            footer: {
+              icon_url: client.user.avatarURL,
+              text: "middle east bot "//اسم البوت 
+            }
+          }
+        });
 
 
   client.on('message', message => {
@@ -243,42 +263,6 @@ client.on('message', async message =>{
 });//////////////////Mal Team  By:Mal Mahmoud-QuaStylr
 
 
-client.on('message', message => {
-	var prefix = "/"
-  if (message.author.x5bz) return;
-  if (!message.content.startsWith(prefix)) return;
-
-  let command = message.content.split(" ")[0];
-  command = command.slice(prefix.length);
-
-  let args = message.content.split(" ").slice(1);
-
-  if (command == "kick") {
-               if(!message.channel.guild) return message.reply('** This command only for servers**');
-         
-  if(!message.guild.member(message.author).hasPermission("KICK_MEMBERS")) return message.reply("**You Don't Have ` KICK_MEMBERS ` Permission**");
-  if(!message.guild.member(client.user).hasPermission("KICK_MEMBERS")) return message.reply("**I Don't Have ` KICK_MEMBERS ` Permission**");
-  let user = message.mentions.users.first();
-  let reason = message.content.split(" ").slice(2).join(" ");
-  if (message.mentions.users.size < 1) return message.reply("**منشن شخص**");
-  if(!reason) return message.reply ("**اكتب سبب الطرد**");
-  if (!message.guild.member(user)
-  .kickable) return message.reply("**لايمكنني طرد شخص اعلى من رتبتي يرجه اعطاء البوت رتبه عالي**");
-
-  message.guild.member(user).kick();
-
-  const kickembed = new Discord.RichEmbed()
-  .setAuthor(`KICKED!`, user.displayAvatarURL)
-  .setColor("RANDOM")
-  .setTimestamp()
-  .addField("**User:**",  '**[ ' + `${user.tag}` + ' ]**')
-  .addField("**By:**", '**[ ' + `${message.author.tag}` + ' ]**')
-  .addField("**Reason:**", '**[ ' + `${reason}` + ' ]**')
-  message.channel.send({
-    embed : kickembed
-  })
-}
-});//////////////////Mal Team  By:Mal Mahmoud-QuaStylr
 
 
 
@@ -308,7 +292,7 @@ message.channel.send(embed)
 
 client.on('message', message => {
     var prefix = "/";
-          if(message.content === prefix + "hchannel") {
+          if(message.content === prefix + "hide") {
           if(!message.channel.guild) return;
           if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply('You Dont Have Perms :x:');
                  message.channel.overwritePermissions(message.guild.id, {
@@ -322,7 +306,7 @@ client.on('message', message => {
     
     client.on('message', message => {
     var prefix = "/";
-          if(message.content === prefix + "schannel") {
+          if(message.content === prefix + "show") {
           if(!message.channel.guild) return;
           if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply(':x:');
                  message.channel.overwritePermissions(message.guild.id, {
