@@ -1,6 +1,25 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
+
+const Util = require('discord.js');
+
+const convert = require("hh-mm-ss");
+
 const dateFormat = require('dateformat');
+
+const fetchVideoInfo = require('youtube-info');
+
+const yt_api_key = "AIzaSyDeoIH0u1e72AtfpwSKKOSy3IPp2UHzqi4"; 
+
+const ytdl = require('ytdl-core');
+
+const fs = require('fs');
+
+const gif = require("gif-search");
+
+const moment = require('moment');
+
+const client = new Discord.Client({disableEveryone: true});
+
 const prefix = "/";
 
    const adminprefix = "/v";
