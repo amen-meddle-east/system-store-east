@@ -2,9 +2,6 @@ const Discord = require('discord.js');
 
 const Util = require('discord.js');
 
-
-const client = new Discord.Client({disableEveryone: true});
-
 const prefix = "/";
 
    const adminprefix = "/v";
@@ -262,8 +259,6 @@ client.on('message', message => {   //اخفاء الروم
      }
     });//////////////////Mal Team  By:Mal Mahmoud-QuaStyle
 
-    
-    
     client.on('message', message => { //اظهار الروم
     var prefix = "-";
           if(message.content === prefix + "show") {
@@ -275,8 +270,5 @@ client.on('message', message => {   //اخفاء الروم
                   message.channel.send('تم ')
      }
     });
-						
-						
-						
-	    
-client.login(process.env.BOT_TOKEN);
+
+client.login(process.env.BOT_TOKEN);	    
