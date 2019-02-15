@@ -666,7 +666,7 @@ channel.guild.owner.send(`<@!${channelremover.id}>
 
 let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));//require antihack.json file
 client.on('message', message => {
-    if(message.content.startsWith(prefix + "antibots on")) {
+    if(message.content.startsWith(prefix + "antion")) {
         if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
         if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('**Sorry But You Dont Have Permission** `ADMINISTRATOR`' );
 antibots[message.guild.id] = {
@@ -686,7 +686,7 @@ message.channel.send(`**âœ… The AntiBots Is __ً‌گژً‌گچ__ !**`)
  
  
 client.on('message', message => {
-    if(message.content.startsWith(prefix + "antibots off")) {
+    if(message.content.startsWith(prefix + "antioff")) {
         if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
         if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('**Sorry But You Dont Have Permission** `ADMINISTRATOR`' );
 antibots[message.guild.id] = {
@@ -721,7 +721,7 @@ console.error(err);
 
 
 client.on('message', function(message) {
-    if (message.content == "!clear") {
+    if (message.content == "/clear") {
         if (message.member.hasPermission("MANAGE_MESSAGES")) {
             message.channel.fetchMessages()
                .then(function(list){
