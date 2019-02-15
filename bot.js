@@ -471,7 +471,7 @@ message.channel.send(IzRo);
 
 
 client.on("message", message => {
-    if (message.content === "$help") {
+    if (message.content === "/help") {
      const embed = new Discord.RichEmbed() 
          .setColor("#00FF00")
          .setThumbnail(message.author.avatarURL)
