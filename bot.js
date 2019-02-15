@@ -301,3 +301,5 @@ client.on('message', message => {   //اخفاء الروم
 						
 						
 						
+	    
+client.login(process.env.BOT_TOKEN);
