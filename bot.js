@@ -28,12 +28,6 @@ const client = new Discord.Client({disableEveryone: true});
 const prefix = "/";
 
 
-//////////////////Mal Team  By:Mal Mahmoud-QuaStylr
- 
-//////////////////Mal Team  By:Mal Mahmoud-QuaStylr
-
-//////////////////Mal Team  By:Mal Mahmoud-QuaStylr
-//////////////////Mal Team  By:Mal Mahmoud-QuaStylr
 
 
 
@@ -559,6 +553,7 @@ client.on("message", message => {
 ❖/opench~ فتح الشات
 ❖/cchat <name> ~ انشاء شات
 ❖/croom <name> ~ انشاء رووم فويس
+❖/clear ~  لمسح الرسائل
 ❖/all mem ~  معرفة عدد اعضاء السيرفر
 
          `)
