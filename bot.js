@@ -661,7 +661,7 @@ channel.guild.owner.send(`<@!${channelremover.id}>
 
 let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));//require antihack.json file
 client.on('message', message => {
-    if(message.content.startsWith(prefix + "antion")) {
+    if(message.content.startsWith(adminprefix + "antion")) {
         if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
         if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('**Sorry But You Dont Have Permission** `ADMINISTRATOR`' );
 antibots[message.guild.id] = {
@@ -681,7 +681,7 @@ message.channel.send(`The AntiBots has been activing  !**`)
  
  
 client.on('message', message => {
-    if(message.content.startsWith(prefix + "antioff")) {
+    if(message.content.startsWith(adminprefix + "antioff")) {
         if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
         if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('**Sorry But You Dont Have Permission** `ADMINISTRATOR`' );
 antibots[message.guild.id] = {
@@ -816,7 +816,7 @@ if(message.author.bot) return;
     role: "member"//Toixc Codes
   }//Toixc Codes
 const channel = rWlc[message.guild.id].role
-  if (message.content.startsWith(prefix + "autorole")) {//Toixc Codes
+  if (message.content.startsWith(adminprefix + "autorole")) {//Toixc Codes
     if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
     let newrole = message.content.split(' ').slice(1).join(" ")//Toixc Codes
     if(!newrole) return message.reply(`**${prefix}autorole <rule name>**`)//Toixc Codes
@@ -840,7 +840,49 @@ client.on("guildMemberAdd", member => {
 });//Toixc Codes
 
 
+client.on('message', message => {
+    var prefix = "f!"
+if (message.content.startsWith(adminprefix + "uptime")) {
+   let uptime = client.uptime;
 
+   let days = 0;
+   let hours = 0;
+   let minutes = 0;
+   let seconds = 0;
+   let notCompleted = true;
+
+   while (notCompleted) {
+
+       if (uptime >= 8.64e+7) {
+
+           days++;
+           uptime -= 8.64e+7;
+
+       } else if (uptime >= 3.6e+6) {
+
+           hours++;
+           uptime -= 3.6e+6;
+
+       } else if (uptime >= 60000) {
+
+           minutes++;
+           uptime -= 60000;
+
+       } else if (uptime >= 1000) {
+           seconds++;
+           uptime -= 1000;
+
+       }
+
+       if (uptime < 1000)  notCompleted = false;
+
+   }
+
+   message.channel.send("`" + `${days} days, ${hours} hrs, ${minutes} min , ${seconds} sec` + "`");
+
+
+}
+});
 
 
 client.login(process.env.BOT_TOKEN);
